@@ -118,7 +118,11 @@
                 <option value="{{ $book->title }}">{{ $book->title }}</option>
             @endforeach
         </select>
-        <input type="text" name="username" placeholder="Enter username">
+        <select name="userTitle">
+            @foreach ($users as $usser)
+                <option value="{{ $usser->username }}">{{ $usser->username }}</option>
+            @endforeach
+        </select>
         <button class="button" type="submit"  >return </button>
     </form>
 

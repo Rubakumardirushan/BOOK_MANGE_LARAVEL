@@ -13,7 +13,8 @@ class BookController extends Controller
 public function index()
 {
     $books = Book::all();
-    return view('books.index', compact('books'));
+    $users= Issuance::all();
+    return view('books.index', compact('books','users'));
 }
 
 public function create()
@@ -40,6 +41,13 @@ public function returnbook(Request $request){
     $book = Book::where('title', $bookTitle)->first();
     $book->stock += 1;
     $book->save();
+
+    $userTitle = $request->input('userTitle');
+
+    // Assuming you have an 'Issuance' model for the 'issuances' table.
+    Issuance::where('book_title', $bookTitle)->where('username', $userTitle)->delete();
+
+
     return redirect('/books');
 
 }
