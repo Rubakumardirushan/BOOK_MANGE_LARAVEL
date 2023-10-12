@@ -44,7 +44,7 @@ public function returnbook(Request $request){
 
     $userTitle = $request->input('userTitle');
 
-    // Assuming you have an 'Issuance' model for the 'issuances' table.
+    
     Issuance::where('book_title', $bookTitle)->where('username', $userTitle)->delete();
 
 
