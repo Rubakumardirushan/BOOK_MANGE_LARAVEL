@@ -89,7 +89,7 @@
         </tbody>
     </table>
     <a class="button" href="/books/create">Add a Book</a>
-
+<i><?=session('msg_update')?></i>
     <h3>Issuance</h3>
 
     <form method="post" action="/books/decrease" >
@@ -103,19 +103,14 @@
         <button class="button" type="submit"  >Issuance</button>
     </form>
 
-    <div id="bookDetails"></div>
-    @if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-    @endif
+    <?=session('error')?>
 
     <h3>Return</h3>
     <form method="post" action="/books/returnbook" >
         @csrf
         <select name="bookTitle">
-            @foreach ($books as $book)
-                <option value="{{ $book->title }}">{{ $book->title }}</option>
+            @foreach ($users as $usser)
+                <option value="{{ $usser->book_title }}">{{ $usser->book_title }}</option>
             @endforeach
         </select>
         <select name="userTitle">

@@ -72,5 +72,6 @@
 
         <button type="submit">Submit</button>
     </form>
+   <?=session('error')?>
 </body>
 </html>

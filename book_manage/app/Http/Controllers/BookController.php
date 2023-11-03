@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Session;
 use App\Models\Book;
 use App\Models\Issuance;
 class BookController extends Controller
@@ -17,10 +17,19 @@ public function index()
     return view('books.index', compact('books','users'));
 }
 
+
+
+
+
 public function create()
 {
     return view('books.create');
 }
+
+
+
+
+
 
 public function store(Request $request)
 {
@@ -31,66 +40,93 @@ public function store(Request $request)
         'stock' => 'required|integer',
     ]);
 
+    $books = Book::all();
+    foreach ($books as $book) {
+        $title = $book->title;
+        if ( $title === $request->input('title')) {
+
+            return redirect('/books/create')->with('error'," this book alredy add in db ");
+        } else {
+
+        }
+    }
     Book::create($request->all());
 
     return redirect('/books');
 }
 
+
+
+
+
+
 public function returnbook(Request $request){
     $bookTitle = $request->input('bookTitle');
     $book = Book::where('title', $bookTitle)->first();
-    $book->stock += 1;
-    $book->save();
+
 
     $userTitle = $request->input('userTitle');
+    if($bookTitle!=null && $userTitle!=null){
+        $book->stock += 1;
+        $book->save();
+    }
 
-    
-    Issuance::where('book_title', $bookTitle)->where('username', $userTitle)->delete();
 
+    $issuanceRecord=Issuance::where('book_title', $bookTitle)->where('username', $userTitle)->first();
+    if($issuanceRecord!=null){
+    $issuanceRecord->delete();}
 
     return redirect('/books');
 
 }
+
+
+
+
+
+
 
 
 
 
 public function decrease(Request $request)
 {
-    // Validate the request data if needed
+
     $request->validate([
         'bookTitle' => 'required',
         'username' => 'required',
     ]);
 
-    // Get the data from the request
+
     $bookTitle = $request->input('bookTitle');
     $username = $request->input('username');
 
-    // Create a new Issuance record and save it to the database
+    $book = Book::where('title', $bookTitle)->first();
     $issuance = new Issuance();
     $issuance->book_title= $bookTitle;
     $issuance->username = $username;
-    $issuance->save();
+
+    if($book->stock>0){
+        $issuance->save();
+      }
 
 
-    $book = Book::where('title', $bookTitle)->first();
 
 
 
 
     if ($book->stock <= 0) {
-        return redirect()->route('books.index')->with('error', 'Book is out of stock');
+        return redirect('/books')->with('error', 'Book is out of stock'.$book->stock);
     }
 
 
-    $book->stock -= 1;
+  $book->stock -= 1;
     $book->save();
-
-
-
     return redirect('/books');
 }
+
+
+
 
 
 
@@ -110,16 +146,24 @@ public function update(Request $request, Book $book)
         'stock' => 'required|integer',
     ]);
 
-    $book->update($request->all());
+  //  $book->update($request->all());
+  $book->author = $request->input('author');
+$book->price = $request->input('price');
+$book->stock = $request->input('stock');
+$book->save();
 
-    return redirect('/books');
+    return redirect('/books')->with('msg_update','you cannot update title   '  .$book->title);
 }
+
+
+
+
 
 
 public function destroy(Book $book)
 {
     $book->delete();
-    return redirect()->route('books.index')->with('success', 'Book deleted successfully');
+    return redirect()->route('books.index');
 }
 
 
