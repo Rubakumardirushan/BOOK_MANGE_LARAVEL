@@ -131,7 +131,7 @@
         <input type="text" name="username" placeholder="Enter username">
         <button class="button" type="submit">Issuance</button>
     </form>
-    {{ session('error') }}
+
 
 
     <h3>Return</h3>
@@ -151,5 +151,6 @@
     </form>
 <i><h3 style="color: red"><?=session('dirushan')?></h3></i>
 <i><h3 style="color: red">{{ session('show') }}</h3></i>
+<I><H3 style="color: red"> <?=session('error')?></H3></I>
 </body>
 </html>

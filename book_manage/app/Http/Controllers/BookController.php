@@ -45,7 +45,7 @@ public function store(Request $request)
         $title = $book->title;
         if ( $title === $request->input('title')) {
 
-            return redirect('/books/create')->with('error'," this book alredy add in db ");
+            return redirect('/books/create')->with('error'.$title.' this book alredy add in db ');
         } else {
 
         }
@@ -78,7 +78,7 @@ public function returnbook(Request $request){
     $issuanceRecord->delete();}else{
         $book->stock -= 1;
         $book->save();
-        return redirect('/books')->with('dirushan',$userTitle.' not take '.$bookTitle.'book');
+        return redirect('/books')->with('dirushan',$userTitle.' not take '.$bookTitle.'  book');
     }
 
     return redirect('/books');
@@ -121,7 +121,7 @@ public function decrease(Request $request)
 
 
     if ($book->stock <= 0) {
-        return redirect('/books')->with('error', 'Book is out of stock'.$book->stock);
+        return redirect('/books')->with('error', '  '.$bookTitle.' is out of stock');
     }
 
 
