@@ -73,8 +73,13 @@ public function returnbook(Request $request){
 
 
     $issuanceRecord=Issuance::where('book_title', $bookTitle)->where('username', $userTitle)->first();
+
     if($issuanceRecord!=null){
-    $issuanceRecord->delete();}
+    $issuanceRecord->delete();}else{
+        $book->stock -= 1;
+        $book->save();
+        return redirect('/books')->with('dirushan',$userTitle.' not take '.$bookTitle.'book');
+    }
 
     return redirect('/books');
 
@@ -167,7 +172,7 @@ public function destroy(Book $book)
         $title = $diru->book_title;
         if ( $title === $book->title) {
 
-           return redirect('/books')->with('show','you cannot delete '.$book->title.' this book  ');
+           return redirect('/books')->with('show','you cannot delete '.$book->title.'  book  ');
         } else {
 
         }

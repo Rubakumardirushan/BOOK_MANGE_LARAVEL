@@ -132,7 +132,7 @@
         <button class="button" type="submit">Issuance</button>
     </form>
     {{ session('error') }}
-    {{ session('show') }}
+   <h3 style="color: red">{{ session('show') }}</h3>
 
     <h3>Return</h3>
     <form method="post" action="/books/returnbook">
@@ -149,6 +149,6 @@
         </select>
         <button class="button" type="submit">Return</button>
     </form>
-
+<i><h3 style="color: red"><?=session('dirushan')?></h3></i>
 </body>
 </html>
