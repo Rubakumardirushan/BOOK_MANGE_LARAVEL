@@ -162,8 +162,26 @@ $book->save();
 
 public function destroy(Book $book)
 {
+    $issus = Issuance::all();
+    foreach ($issus as $diru) {
+        $title = $diru->book_title;
+        if ( $title === $book->title) {
+
+           return redirect('/books')->with('show','you cannot delete '.$book->title.' this book  ');
+        } else {
+
+        }
+    }
+
+
+
+
+
+
+
+
     $book->delete();
-    return redirect()->route('books.index');
+    return redirect('/books');
 }
 
 

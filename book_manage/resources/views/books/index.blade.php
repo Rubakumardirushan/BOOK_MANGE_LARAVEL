@@ -15,22 +15,27 @@
             color: white;
             padding: 20px;
             text-align: center;
+            margin-bottom: 20px;
         }
 
-        a.button {
+        a.button, button.button {
             background-color: #007BFF;
             color: white;
             padding: 10px 20px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
+            border: none;
             border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
         }
 
         table {
             border-collapse: collapse;
             width: 100%;
             background-color: white;
+            margin-bottom: 20px;
         }
 
         th, td {
@@ -51,10 +56,34 @@
         tr:hover {
             background-color: #ddd;
         }
+
+        select, input {
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            margin-bottom: 15px;
+        }
+
     </style>
 </head>
 <body>
     <h1>Book List</h1>
+
+    @if (session('success'))
+        <div class="alert">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <table>
         <thead>
@@ -89,10 +118,10 @@
         </tbody>
     </table>
     <a class="button" href="/books/create">Add a Book</a>
-<i><?=session('msg_update')?></i>
-    <h3>Issuance</h3>
+    <i>{{ session('msg_update') }}</i>
 
-    <form method="post" action="/books/decrease" >
+    <h3>Issuance</h3>
+    <form method="post" action="/books/decrease">
         @csrf
         <select name="bookTitle">
             @foreach ($books as $book)
@@ -100,25 +129,25 @@
             @endforeach
         </select>
         <input type="text" name="username" placeholder="Enter username">
-        <button class="button" type="submit"  >Issuance</button>
+        <button class="button" type="submit">Issuance</button>
     </form>
-
-    <?=session('error')?>
+    {{ session('error') }}
+    {{ session('show') }}
 
     <h3>Return</h3>
-    <form method="post" action="/books/returnbook" >
+    <form method="post" action="/books/returnbook">
         @csrf
         <select name="bookTitle">
-            @foreach ($users as $usser)
-                <option value="{{ $usser->book_title }}">{{ $usser->book_title }}</option>
+            @foreach ($users as $user)
+                <option value="{{ $user->book_title }}">{{ $user->book_title }}</option>
             @endforeach
         </select>
         <select name="userTitle">
-            @foreach ($users as $usser)
-                <option value="{{ $usser->username }}">{{ $usser->username }}</option>
+            @foreach ($users as $user)
+                <option value="{{ $user->username }}">{{ $user->username }}</option>
             @endforeach
         </select>
-        <button class="button" type="submit"  >return </button>
+        <button class="button" type="submit">Return</button>
     </form>
 
 </body>
