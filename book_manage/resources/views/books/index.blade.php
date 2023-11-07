@@ -101,7 +101,7 @@
             <tr>
                 <td>{{ $book->title }}</td>
                 <td>{{ $book->author }}</td>
-                <td>${{ $book->price }}</td>
+                <td>{{ $book->price }}/=</td>
                 <td>{{ $book->stock }}</td>
                 <td>
                     <a class="button" href="/books/{{ $book->id }}/edit">Edit</a>
