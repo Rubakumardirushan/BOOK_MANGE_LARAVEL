@@ -45,7 +45,7 @@ public function store(Request $request)
         $title = $book->title;
         if ( $title === $request->input('title')) {
 
-            return redirect('/books/create')->with('error'.$title.' this book alredy add in db ');
+            return redirect('/books/create')->with('error',$title.'  book already add in table ');
         } else {
 
         }

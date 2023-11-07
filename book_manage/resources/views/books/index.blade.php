@@ -152,5 +152,6 @@
 <i><h3 style="color: red"><?=session('dirushan')?></h3></i>
 <i><h3 style="color: red">{{ session('show') }}</h3></i>
 <I><H3 style="color: red"> <?=session('error')?></H3></I>
+
 </body>
 </html>
