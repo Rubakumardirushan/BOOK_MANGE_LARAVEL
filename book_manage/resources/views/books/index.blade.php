@@ -134,7 +134,7 @@
 
 
 
-    <h3>Return</h3>
+    <h3>Returns</h3>
     <form method="post" action="/books/returnbook">
         @csrf
         <select name="bookTitle">
